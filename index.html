@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>my喫茶</title>
+  <meta name="theme-color" content="#2b1a12">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="my喫茶">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <img src="icons/icon.svg" alt="" class="logo">
+    <h1>my喫茶</h1>
+  </header>
+
+  <!-- ===== レシピ一覧 ===== -->
+  <main id="view-list" class="view">
+    <div id="long-list"></div>
+    <input id="search" type="search" placeholder="レシピを探す">
+    <div id="cat-chips" class="chips"></div>
+    <div id="recipe-list"></div>
+    <button id="btn-add" class="btn-sub wide">＋ 自分のレシピを追加</button>
+  </main>
+
+  <!-- ===== レシピ詳細（分量の換算） ===== -->
+  <main id="view-detail" class="view hidden">
+    <button class="back" data-back="list">‹ もどる</button>
+    <div id="detail"></div>
+  </main>
+
+  <!-- ===== 淹れるモード ===== -->
+  <main id="view-brew" class="view brew hidden">
+    <div id="brew"></div>
+  </main>
+
+  <!-- ===== 記録を書く ===== -->
+  <main id="view-record" class="view hidden">
+    <button class="back" data-back="list">‹ あとで</button>
+    <div id="record-form"></div>
+  </main>
+
+  <!-- ===== 記録一覧 ===== -->
+  <main id="view-records" class="view hidden">
+    <h2 class="page-title">これまでの1杯</h2>
+    <div id="records"></div>
+  </main>
+
+  <!-- ===== 自作レシピの追加・編集 ===== -->
+  <main id="view-edit" class="view hidden">
+    <button class="back" data-back="list">‹ もどる</button>
+    <div id="edit-form"></div>
+  </main>
+
+  <nav class="tabbar">
+    <button data-tab="list" class="active">☕ レシピ</button>
+    <button data-tab="records">📖 記録</button>
+  </nav>
+
+  <script src="recipes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

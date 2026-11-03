@@ -1,0 +1,240 @@
+:root {
+  --bg: #f5ede1;       /* 生成りの紙 */
+  --card: #fffaf2;
+  --text: #3a2a20;     /* こげ茶 */
+  --sub: #8a7564;
+  --accent: #b5703a;   /* 銅のケトル */
+  --accent-dark: #8e5428;
+  --line: #e6d8c4;
+  --dark: #241610;     /* 淹れるモードの背景 */
+  --cream: #f3e3c8;
+  --gold: #e0a96d;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", sans-serif;
+  padding-bottom: 80px;
+  -webkit-tap-highlight-color: transparent;
+}
+button { font: inherit; cursor: pointer; }
+input, select, textarea { font: inherit; }
+.hidden { display: none !important; }
+
+/* ===== ヘッダー・タブ ===== */
+.app-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 16px 10px;
+  padding-top: max(14px, env(safe-area-inset-top));
+}
+.logo { width: 36px; height: 36px; border-radius: 9px; }
+.app-header h1 {
+  margin: 0; font-family: "Shippori Mincho", serif; font-weight: 800;
+  font-size: 1.6rem; letter-spacing: 0.04em;
+}
+.tabbar {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  display: flex; background: var(--card); border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tabbar button {
+  flex: 1; border: none; background: none; padding: 14px 0; color: var(--sub); font-weight: 600;
+}
+.tabbar button.active { color: var(--accent-dark); }
+body.brewing .tabbar, body.brewing .app-header { display: none; }
+body.brewing { background: var(--dark); padding-bottom: 0; }
+
+.view { padding: 0 16px; max-width: 640px; margin: 0 auto; }
+.page-title { font-family: "Shippori Mincho", serif; text-align: center; margin: 8px 0 4px; }
+.sec-title { font-size: 0.9rem; color: var(--sub); margin: 8px 0; }
+.empty { text-align: center; color: var(--sub); padding: 40px 0; line-height: 1.8; }
+.center { text-align: center; }
+
+/* ===== ボタン ===== */
+.btn-main {
+  background: var(--accent); color: #fff; border: none; border-radius: 14px;
+  padding: 14px; font-weight: 700; font-size: 1.05rem;
+}
+.btn-main:active { background: var(--accent-dark); }
+.btn-sub {
+  background: var(--card); color: var(--text); border: 1px solid var(--line);
+  border-radius: 12px; padding: 10px 14px;
+}
+.btn-sub.danger { color: #b0412e; }
+.small { padding: 7px 12px; font-size: 0.85rem; }
+.wide { display: block; width: 100%; margin: 14px 0; }
+.row-btns { display: flex; gap: 8px; margin: 8px 0 20px; flex-wrap: wrap; }
+.back {
+  border: none; background: none; color: var(--accent-dark); padding: 6px 0; font-weight: 600;
+}
+
+/* ===== 一覧 ===== */
+#search {
+  width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: 12px;
+  background: var(--card); margin: 4px 0 10px;
+}
+.chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex-shrink: 0; border: 1px solid var(--line); background: var(--card); color: var(--text);
+  border-radius: 999px; padding: 6px 13px; font-size: 0.85rem;
+}
+.chip.active { background: var(--text); color: var(--cream); border-color: var(--text); }
+
+.card {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+  padding: 12px 12px 12px 14px; margin: 8px 0;
+}
+.card:active { transform: scale(0.99); }
+.card-icon {
+  font-size: 1.5rem; width: 46px; height: 46px; border-radius: 12px;
+  display: grid; place-items: center; background: var(--bg); flex-shrink: 0;
+}
+.card-body { flex: 1; min-width: 0; }
+.card-name { font-weight: 700; }
+.card-meta { font-size: 0.82rem; color: var(--sub); margin-top: 2px; }
+.card-by { font-size: 0.75rem; color: var(--sub); opacity: 0.85; }
+.star { border: none; background: none; font-size: 1.4rem; color: #d9cbb6; padding: 4px; }
+.star.on { color: var(--gold); }
+.star.big { font-size: 1.8rem; }
+
+.long-card {
+  display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  background: #e9f1f3; border: 1px solid #c9dde2; border-radius: 14px; padding: 12px 14px; margin-bottom: 8px;
+}
+.long-btns { display: flex; gap: 6px; flex-shrink: 0; }
+.done { color: #2e7d4f; }
+
+/* ===== 詳細 ===== */
+.detail-head { display: flex; align-items: center; gap: 12px; margin: 4px 0 12px; }
+.detail-icon {
+  font-size: 2rem; width: 58px; height: 58px; border-radius: 16px;
+  display: grid; place-items: center; background: var(--card); border: 1px solid var(--line);
+}
+.detail-title { flex: 1; }
+.detail-title h2 { margin: 0; font-family: "Shippori Mincho", serif; font-size: 1.35rem; }
+.memo-box {
+  background: #fff3d6; border-left: 4px solid var(--gold); border-radius: 10px;
+  padding: 10px 12px; margin: 10px 0; line-height: 1.6;
+}
+.memo-title { font-size: 0.8rem; color: var(--accent-dark); font-weight: 700; }
+.panel {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px; margin: 12px 0;
+}
+.panel-title { font-weight: 700; margin-bottom: 8px; }
+.bean-row { display: flex; align-items: center; gap: 8px; margin: 10px 0; font-weight: 700; }
+.bean-row input {
+  width: 90px; text-align: center; font-size: 1.5rem; font-weight: 800;
+  border: 1px solid var(--line); border-radius: 10px; padding: 6px; background: #fff;
+}
+.pm {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line);
+  background: var(--bg); font-size: 1.2rem; flex-shrink: 0;
+}
+.amount-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.amount { background: var(--bg); border-radius: 12px; padding: 8px 10px; }
+.a-label { font-size: 0.75rem; color: var(--sub); }
+.a-val { font-size: 1.4rem; font-weight: 800; }
+.a-val small { font-size: 0.8rem; margin-left: 2px; }
+.a-val.sm { font-size: 0.95rem; padding-top: 4px; }
+.extras { margin-top: 10px; line-height: 1.8; }
+.warn { color: #b0412e; font-size: 0.85rem; margin: 8px 0 0; }
+.steps { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.steps th { font-size: 0.75rem; color: var(--sub); text-align: left; font-weight: 600; padding: 4px; }
+.steps td { padding: 8px 4px; border-top: 1px solid var(--line); }
+.steps td:nth-child(3) { color: var(--accent-dark); font-weight: 700; }
+.steps td:nth-child(4) { font-weight: 700; }
+.steps tr.end td { color: var(--sub); }
+.long-steps { margin: 0; padding-left: 1.3em; line-height: 1.9; }
+.note { line-height: 1.7; }
+.source { font-size: 0.8rem; color: var(--sub); }
+.source a { color: var(--accent-dark); }
+
+/* ===== 淹れるモード ===== */
+.brew { color: var(--cream); text-align: center; padding-top: env(safe-area-inset-top); }
+.brew-top { display: flex; align-items: center; gap: 10px; padding: 12px 0; }
+.brew-x {
+  border: 1px solid #5a4335; background: none; color: var(--cream); border-radius: 999px; padding: 6px 14px;
+}
+.brew-name { font-family: "Shippori Mincho", serif; font-size: 1.5rem; margin: 10px 0 16px; }
+.brew-name.small { font-size: 0.95rem; margin: 0; opacity: 0.8; }
+.prep-grid { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.prep-grid div {
+  background: #352219; border-radius: 16px; padding: 14px 18px; min-width: 96px;
+  display: flex; flex-direction: column;
+}
+.prep-grid span { font-size: 0.8rem; opacity: 0.7; }
+.prep-grid b { font-size: 1.8rem; }
+.prep-grid small { font-size: 0.75rem; opacity: 0.7; }
+.prep-extras { margin: 14px 0; line-height: 1.8; color: var(--gold); }
+.memo-box.dark { background: #3a2a1a; color: var(--cream); text-align: left; margin: 16px 0; }
+.long-steps.light { text-align: left; margin: 16px auto; max-width: 320px; }
+.hours { display: block; margin: 12px 0; }
+.hours input { width: 70px; text-align: center; border-radius: 8px; border: none; padding: 6px; }
+.btn-start {
+  display: block; width: 100%; margin: 24px 0 8px; padding: 20px;
+  border: none; border-radius: 20px; background: var(--gold); color: var(--dark);
+  font-size: 1.4rem; font-weight: 800;
+}
+.btn-start small { display: block; font-size: 0.8rem; font-weight: 600; margin-top: 4px; }
+.hint { opacity: 0.6; font-size: 0.85rem; }
+
+.b-clock { font-size: 4.5rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; line-height: 1.1; }
+.b-label { font-size: 1.4rem; font-weight: 700; color: var(--gold); margin: 6px 0 14px; }
+.b-label.done { font-size: 1.8rem; }
+.pour-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+.pour { background: #352219; border-radius: 18px; padding: 12px 8px; }
+.pour.main { background: var(--cream); color: var(--dark); }
+.p-label { font-size: 0.85rem; opacity: 0.75; }
+.p-val { font-size: 2.6rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.pour.main .p-val { font-size: 3.4rem; }
+.p-val small { font-size: 0.9rem; margin-left: 3px; }
+.bar { height: 8px; background: #3a2a20; border-radius: 99px; margin: 16px 0 4px; overflow: hidden; }
+.bar div { height: 100%; background: var(--gold); transition: width 0.4s; }
+.bar-label { font-size: 0.8rem; opacity: 0.6; }
+.b-next { margin: 14px 0; line-height: 1.6; opacity: 0.85; }
+.b-next b { color: var(--gold); font-size: 1.2rem; }
+.b-steps { text-align: left; font-size: 0.85rem; margin: 10px 0; }
+.b-steps div { display: grid; grid-template-columns: 48px 1fr auto; gap: 8px; padding: 6px 10px; border-radius: 8px; opacity: 0.55; }
+.b-steps div.past { opacity: 0.3; }
+.b-steps div.now { opacity: 1; background: #352219; font-weight: 700; }
+.b-controls { display: flex; gap: 10px; margin: 12px 0 30px; }
+.b-controls button {
+  flex: 1; padding: 14px; border-radius: 14px; border: 1px solid #5a4335; background: none; color: var(--cream);
+}
+
+/* ===== 記録 ===== */
+.field { display: block; margin: 12px 0; font-size: 0.85rem; color: var(--sub); font-weight: 600; }
+.field input, .field textarea, .field select {
+  display: block; width: 100%; margin-top: 4px; padding: 10px 12px;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--text);
+}
+.taste { display: flex; align-items: center; justify-content: space-between; }
+.stars button { border: none; background: none; font-size: 2rem; color: #d9cbb6; padding: 0 2px; }
+.stars button.on { color: var(--gold); }
+.seg { display: flex; gap: 4px; }
+.seg button {
+  width: 40px; height: 36px; border-radius: 9px; border: 1px solid var(--line); background: var(--card); color: var(--text);
+}
+.seg button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.rec { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 12px 14px; margin: 10px 0; }
+.rec-head { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--sub); }
+.rec-stars { color: var(--gold); }
+.rec-stars .off { color: #e6d8c4; }
+.rec-name { font-weight: 700; margin-top: 2px; }
+.rec p { margin: 6px 0; line-height: 1.6; }
+.rec-next { background: #fff3d6; border-radius: 8px; padding: 6px 10px; font-size: 0.9rem; }
+.rec-tastes { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; margin-top: 8px; font-size: 0.75rem; color: var(--sub); }
+.rec-tastes span { display: flex; align-items: center; gap: 6px; }
+.rec-tastes em { flex: 1; height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.rec-tastes i { display: block; height: 100%; background: var(--accent); }
+
+/* ===== 自作レシピ ===== */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 10px; }
+.grid2 .field { margin: 6px 0; }
+.e-row { display: grid; grid-template-columns: 64px 70px 1fr 40px; gap: 6px; margin-bottom: 6px; align-items: center; }
+.e-row input { width: 100%; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); }
