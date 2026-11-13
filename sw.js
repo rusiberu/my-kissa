@@ -1,5 +1,5 @@
 // オフラインでも開けるようにするための仕組み（Service Worker）
-const CACHE_NAME = "my-kissa-v1";
+const CACHE_NAME = "my-kissa-v2";
 const CACHE_FILES = [
   "./",
   "./index.html",
@@ -31,8 +31,11 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        // 成功した返事（200番台）だけ保存する。404やエラーで正しいキャッシュを上書きしないため
+        if (response.ok && event.request.method === "GET") {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+        }
         return response;
       })
       .catch(() => caches.match(event.request))

@@ -154,10 +154,9 @@ function renderLongBrews() {
 setInterval(() => { if (!$("#view-list").classList.contains("hidden")) renderLongBrews(); }, 60000);
 
 function finishLong(key) {
+  // ここでは抽出中リストから消さない（「あとで」で戻っても残るように）。消すのは saveRecord のとき
   const b = longBrews.find((x) => x.key === key);
-  longBrews = longBrews.filter((x) => x.key !== key);
-  save("mk_long", longBrews);
-  openRecord({ recipeId: b.recipeId, name: b.name, beans: b.beans, water: b.water });
+  openRecord({ recipeId: b.recipeId, name: b.name, beans: b.beans, water: b.water, longKey: key });
 }
 function cancelLong(key) {
   if (!confirm("この抽出を取り消しますか？")) return;
@@ -523,8 +522,13 @@ function setDraft(key, n) {
 }
 function saveRecord() {
   readDraftInputs();
-  records.unshift({ ...draft, id: Date.now(), date: Date.now() });
+  const { longKey, ...rec } = draft;
+  records.unshift({ ...rec, id: Date.now(), date: Date.now() });
   save("mk_records", records);
+  if (longKey) { // 氷出し・水出しは、記録できたら抽出中リストから外す
+    longBrews = longBrews.filter((x) => x.key !== longKey);
+    save("mk_long", longBrews);
+  }
   show("records");
 }
 
@@ -637,7 +641,9 @@ function readEdit() {
       label: row.querySelector(".e-label").value.trim(),
     }));
     steps.sort((a, b) => a.t - b.t);
-    steps.push({ t: parseTime($("#e-end").value), label: "完成", end: true });
+    // 完成の時間が最後の注ぎより早いと途中で完成になるので、最後の注ぎより前にはしない
+    const lastT = steps.length ? steps[steps.length - 1].t : 0;
+    steps.push({ t: Math.max(parseTime($("#e-end").value), lastT), label: "完成", end: true });
     e.steps = steps;
   }
 }
