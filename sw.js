@@ -1,5 +1,5 @@
 // オフラインでも開けるようにするための仕組み（Service Worker）
-const CACHE_NAME = "my-kissa-v2";
+const CACHE_NAME = "my-kissa-v3";
 const CACHE_FILES = [
   "./",
   "./index.html",

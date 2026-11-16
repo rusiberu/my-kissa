@@ -102,7 +102,7 @@ function renderRecipeCards() {
   if (currentCat === "fav") list = list.filter((r) => favs.includes(r.id));
   else if (currentCat === "mine") list = list.filter((r) => r.custom);
   else if (currentCat !== "all") list = list.filter((r) => r.cat === currentCat);
-  if (q) list = list.filter((r) => (r.name + r.by + r.note).includes(q));
+  if (q) list = list.filter((r) => (r.name + " " + (r.by || "") + " " + (r.note || "")).toLowerCase().includes(q.toLowerCase()));
   // お気に入りを上に
   list.sort((a, b) => favs.includes(b.id) - favs.includes(a.id));
 
@@ -291,6 +291,7 @@ let audioCtx = null;
 function sound(freq, len) {
   try {
     audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state !== "running") audioCtx.resume(); // アプリを切り替えて戻ると止まっていることがある
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
     osc.frequency.value = freq;
@@ -655,8 +656,9 @@ function addRow() {
   renderEditForm();
 }
 function removeRow(i) {
+  // 先に画面の行を消してから読み込む（読み込むと時間順に並び替わり、番号がずれるため）
+  document.querySelectorAll(".e-row")[i].remove();
   readEdit();
-  edit.steps.splice(i, 1);
   renderEditForm();
 }
 function saveEdit() {
