@@ -36,9 +36,10 @@ function fmtTime(sec) {
   return Math.floor(sec / 60) + ":" + String(sec % 60).padStart(2, "0");
 }
 function parseTime(str) {
-  // "1:30" → 90秒、"45" → 45秒
-  const parts = String(str).trim().split(":");
-  if (parts.length === 2) return Number(parts[0]) * 60 + Number(parts[1]);
+  // "1:30" → 90秒、"45" → 45秒。全角の「１：３０」も半角にそろえてから読む
+  const half = String(str).replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0)).replace(/：/g, ":");
+  const parts = half.trim().split(":");
+  if (parts.length === 2) return (Number(parts[0]) * 60 + Number(parts[1])) || 0;
   return Number(parts[0]) || 0;
 }
 function fmtClock(ms) {
